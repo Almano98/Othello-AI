@@ -2,6 +2,28 @@
 
 This is an Othello AI program that implements a minimax algorithm, with alpha beta pruning, and that makes use of MPI parallelization, and other techniques such as iterative deepening, and an advanced evaluation function to choose the best move possible. 
 s
+
+# Requirements
+
+This project makes use of the following:
+
+[C](https://gcc.gnu.org/)
+[Java](https://www.oracle.com/za/java/technologies/javase/javase-jdk8-downloads.html)
+[OpenMPI library](https://www.open-mpi.org/)
+
+# To Run
+
+To compile the player run:
+>make
+
+To run the game run:
+>./run.sh [player1] [player2] [int_val_time_out_in_seconds] [num_processes]
+
+If no arguments are given the default of the player within the player directory will play against itself with the following game parameters:
+
+Threads: 4
+time: 4s
+
 # How it works
 
 The whole game process is controlled by the master process (process 0), when it is our AI's turn to make a move, the master process will synchronize the current board in play with the other processes, and then send a message to the other processes, asking for each to return a move. Each process then gets an initial location based on their rank, and runs the minimax algorithm on these initial locations with a depth of 4. If more time is available after minimax returns it's results (Just under the time limit specified by the game engine, allows for extra time for values to be returned.) it increases the depth by 1 and runs minimax again on this new depth. 
